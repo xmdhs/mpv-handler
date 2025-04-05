@@ -24,8 +24,8 @@ jobs:
 
       - name: Build
         run: |
-          GOOS=windows GOARCH=amd64 go build -trimpath -ldflags "-w -s" -o build/mpv-handler.exe
-          GOOS=windows GOARCH=arm64 go build -trimpath -ldflags "-w -s" -o build/mpv-handler-arm64.exe
+          GOOS=windows GOARCH=amd64 go build -trimpath -ldflags "-w -s -H windowsgui" -o build/mpv-handler.exe
+          GOOS=windows GOARCH=arm64 go build -trimpath -ldflags "-w -s -H windowsgui" -o build/mpv-handler-arm64.exe
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4
