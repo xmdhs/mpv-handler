@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net/url"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -55,9 +56,13 @@ func processLink(link, mpvPath string) error {
 	videoURL = strings.Replace(videoURL, "http//", "http://", 1)
 	videoURL = strings.Replace(videoURL, "https//", "https://", 1)
 
+	_, err := url.Parse(videoURL)
+	if err != nil {
+		return fmt.Errorf("url 错误: %w url: %v", err, videoURL)
+	}
 	cmd := exec.Command(mpvPath, videoURL)
 	if err := cmd.Run(); err != nil {
-		return fmt.Errorf("启动 mpv 失败: %v", err)
+		return fmt.Errorf("启动 mpv 失败: %w", err)
 	}
 	return nil
 }
