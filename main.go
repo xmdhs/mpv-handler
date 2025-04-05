@@ -56,7 +56,7 @@ func processLink(link, mpvPath string) error {
 	videoURL = strings.Replace(videoURL, "https//", "https://", 1)
 
 	cmd := exec.Command(mpvPath, videoURL)
-	if err := cmd.Start(); err != nil {
+	if err := cmd.Run(); err != nil {
 		return fmt.Errorf("启动 mpv 失败: %v", err)
 	}
 	return nil
@@ -86,8 +86,7 @@ func main() {
 	mpvPath := os.Getenv("MPV_PATH")
 
 	if mpvPath == "" {
-		zenity.Error("未设置 mpv 路径\n\ndir: "+dir, zenity.Title("Error"), zenity.ErrorIcon)
-		os.Exit(1)
+		mpvPath = filepath.Join(dir, "mpv.exe")
 	}
 
 	link := os.Args[1]
